@@ -41,6 +41,41 @@ Gradio response + retrieved PDF pages
 
 The original source HR Policy PDF is intentionally **not included** in this public repository.
 
+## OpenRouter API key setup (required)
+
+This chatbot uses **OpenRouter** for text generation. You need an OpenRouter API key to run its LLM calls; a separate OpenAI API key is **not required**. The `langchain-openai` package provides the OpenAI-compatible `ChatOpenAI` client, which is pointed at OpenRouter's endpoint. There is no separate OpenRouter pip dependency in this implementation.
+
+1. Visit [OpenRouter](https://openrouter.ai/) and sign in or create an account.
+2. Open the [API Keys page](https://openrouter.ai/settings/keys).
+3. Select **Create Key**, give it a recognizable name such as `nestle-hr-rag-demo`, and copy the generated key. Keep it private; if it becomes exposed, revoke it and create another.
+4. In Google Colab, run the notebook's secure key-input cell and paste your key when prompted:
+
+   ```python
+   from getpass import getpass
+   openrouter_api_key = getpass("Enter your OpenRouter API key: ")
+   ```
+
+5. The notebook configures LangChain to call OpenRouter:
+
+   ```python
+   from langchain_openai import ChatOpenAI
+
+   llm = ChatOpenAI(
+       model="openrouter/free",
+       api_key=openrouter_api_key,
+       base_url="https://openrouter.ai/api/v1",
+       temperature=0,
+       max_tokens=1000,
+       request_timeout=60,
+       max_retries=0,
+       use_responses_api=False,
+   )
+   ```
+
+6. Continue running the notebook. Free model availability and rate limits can vary; check the [OpenRouter models](https://openrouter.ai/models) and [documentation](https://openrouter.ai/docs) if a model is unavailable.
+
+**Security:** Never paste your key into GitHub, a committed notebook cell, or `README.md`. `getpass()` hides input while you type and holds the key in the current Python session, so you must enter it again after restarting the runtime. Avoid sharing public Gradio links because chatbot requests can use your API key.
+
 ## Example questions
 
 - What is Nestlé's policy on employee training?
