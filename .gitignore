@@ -1,0 +1,26 @@
+# Credentials and environment variables
+.env
+.env.*
+!.env.example
+*.pem
+*secret*
+
+# Local model/vector data
+nestle_hr_chroma_assessment/
+nestle_chroma_db/
+nestle_chroma_clean/
+nestle_chroma_final/
+chroma/
+chroma_db/
+*.sqlite3
+*.sqlite
+
+# Python and notebook caches
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Source PDF supplied for educational processing (not for public redistribution)
+the_nestle_hr_policy_pdf_2012.pdf
